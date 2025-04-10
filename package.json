@@ -1,6 +1,7 @@
 {
   "name": "storypoints-calc",
   "version": "0.1.0",
+  "homepage": "/storypoints",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
