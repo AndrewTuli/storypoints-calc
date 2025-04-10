@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import './StoryPointsEstimator.css';
 
 const DOMAIN_LEARNING_OPTIONS = [
-  { value: 1, label: 'Familiar Domain (Minimal Learning) (1)' },
-  { value: 3, label: 'Moderate Complexity (Requires Research) (3)' },
-  { value: 8, label: 'High Complexity (Deep Dive Needed) (8)' },
-  { value: 13, label: 'Completely New Domain (Fundamental Research) (13)' }
+  { value: 1, label: 'Familiar Domain (Minimal Learning)' },
+  { value: 3, label: 'Moderate Complexity (Requires Research)' },
+  { value: 8, label: 'High Complexity (Deep Dive Needed)' },
+  { value: 13, label: 'Completely New Domain (Fundamental Research)' }
 ];
 
 const TECHNICAL_COMPLEXITY_OPTIONS = [
-  { value: 2, label: 'Simple Implementation (2)' },
-  { value: 5, label: 'Moderate Technical Complexity (5)' },
-  { value: 8, label: 'High Technical Challenge (8)' }
+  { value: 2, label: 'Simple Implementation' },
+  { value: 5, label: 'Moderate Technical Complexity' },
+  { value: 8, label: 'High Technical Challenge' }
 ];
 
 const UNCERTAINTY_OPTIONS = [
-  { value: 1, label: 'Clearly Defined Requirements (1)' },
-  { value: 3, label: 'Some Uncertainty (3)' },
-  { value: 8, label: 'High Uncertainty (8)' }
+  { value: 1, label: 'Clearly Defined Requirements' },
+  { value: 3, label: 'Some Uncertainty' },
+  { value: 8, label: 'High Uncertainty' }
 ];
 
 const closestFibonacci = (num) => {
@@ -29,15 +29,30 @@ const StoryPointsEstimator = () => {
   const [domain, setDomain] = useState(1);
   const [technical, setTechnical] = useState(2);
   const [uncertainty, setUncertainty] = useState(1);
+  const [isDescriptionVisible, setDescriptionVisible] = useState(false);
 
   const totalSP = closestFibonacci(domain * 0.4 + technical * 0.4 + uncertainty * 0.2);
+
+  const toggleDescription = () => {
+    setDescriptionVisible(!isDescriptionVisible);
+  };
 
   return (
     <div className="sp-container">
       <h2>Story Points Estimator</h2>
 
+      <button className="description-toggle" onClick={toggleDescription}>
+        {isDescriptionVisible ? 'Close description ▼' : 'Show description ▲' }
+      </button>
+
+      {isDescriptionVisible && (
+        <div className="description-block">
+          This application evaluates Story Points based on three parameters: the Degree of need for domain knowledge (weight 0.4), the Technical complexity of implementation (weight 0.4), and the Degree of uncertainty of requirements (weight 0.2). The final number of Story Points is rounded to the nearest Fibonacci number.
+        </div>
+      )}
+
       <div className="form-group">
-        <label>Domain Learning (weight 0.4):</label>
+        <label>Domain Learning:</label>
         <select value={domain} onChange={(e) => setDomain(Number(e.target.value))}>
           {DOMAIN_LEARNING_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -46,7 +61,7 @@ const StoryPointsEstimator = () => {
       </div>
 
       <div className="form-group">
-        <label>Technical Complexity  (weight 0.4):</label>
+        <label>Technical Complexity:</label>
         <select value={technical} onChange={(e) => setTechnical(Number(e.target.value))}>
           {TECHNICAL_COMPLEXITY_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -55,7 +70,7 @@ const StoryPointsEstimator = () => {
       </div>
 
       <div className="form-group">
-        <label>Uncertainty  (weight 0.2):</label>
+        <label>Uncertainty:</label>
         <select value={uncertainty} onChange={(e) => setUncertainty(Number(e.target.value))}>
           {UNCERTAINTY_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
