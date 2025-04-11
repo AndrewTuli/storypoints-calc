@@ -42,7 +42,7 @@ const StoryPointsEstimator = () => {
       <h2>Story Points Estimator</h2>
 
       <button className="description-toggle" onClick={toggleDescription}>
-        {isDescriptionVisible ? 'Close description ▼' : 'Show description ▲' }
+        {isDescriptionVisible ? 'Close description ▲' : 'Show description ▼' }
       </button>
 
       {isDescriptionVisible && (
